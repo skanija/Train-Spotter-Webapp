@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Spotter</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body class="p-3">
+
+        <div class="row">
+            <div class="col">
+                <h1 class="text-primary" th:text="'Welcome, ' + ${loggedInUser.getUserName()}">Welcome, User</h1>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/trains/new}">spot a train</a></p>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/user/{id}(id=${loggedInUser.getId()})}">user settings</a></p>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/logout}">logout</a></p>
+            </div>
+        </div>
+
+        <div class="container text-center">
+
+            <form th:action="@{/trains}" method="get" class="mb-3">
+                <label for="engineType">Show only:</label>
+                <select name="engineType" id="engineType"
+                        class="form-select w-auto d-inline"
+                        onchange="this.form.submit()">
+                    <option th:value="''"
+                            th:selected="${engineType == null or engineType == ''}">
+                    All Types
+                    </option>
+                    <option th:value="'Steam'"
+                            th:selected="${engineType == 'Steam'}">
+                    Steam
+                    </option>
+                    <option th:value="'Diesel'"
+                            th:selected="${engineType == 'Diesel'}">
+                    Diesel
+                    </option>
+                    <option th:value="'Electric'"
+                            th:selected="${engineType == 'Electric'}">
+                    Electric
+                    </option>
+                </select>
+            </form>
+
+            <div class="row">
+                <div class="col border border-black">
+                    <p>Image</p>
+                </div>
+                <div class="col border border-black">
+                    <p>Name (road & number)</p>
+                </div>
+                <div class="col border border-black">
+                    <p>Build Date</p>
+                </div>
+                <div class="col border border-black">
+                    <p>Wheel Arrangement</p>
+                </div>
+                <div class="col border border-black">
+                    <p>Date Spotted</p>
+                </div>
+                <div class="col border border-black">
+                    <p>Location</p>
+                </div>
+            </div>
+
+            <div th:each="train : ${allTrains}" class="row">
+                <div class="col">
+                    <img th:src="@{/files/{img}(img=${train.imagePath})}" th:alt="${train.getName()}" class="img-fluid" />
+                </div>
+                <div class="col border border-black">
+                    <p><a th:href="@{/trains/{id}(id=${train.getId()})}" th:text="${train.getName()}">Train Name</a></p>
+                </div>
+                <div class="col border border-black">
+                    <p th:text="${train.getBuildDate()}">Build Date</p>
+                </div>
+                <div class="col border border-black">
+                    <p th:text="${train.getWheelArrangement()}">Wheel Arrangement</p>
+                </div>
+                <div class="col border border-black">
+                    <p th:text="${train.getDateSpotted()}">Date Spotted</p>
+                </div>
+                <div class="col border border-black">
+                    <p th:text="${train.getLocation()}">Location</p>
+                </div>
+            </div>
+
+        </div>
+    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

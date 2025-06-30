@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Spotter</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body class="p-3">
+
+        <div class="row">
+            <div class="col">
+                <h1 class="text-primary" th:text="${train.getName()}">...</h1>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/trains}">trains</a></p>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/logout}">logout</a></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p th:text="'Build Date: ' + ${train.buildDate}">Build Date: …</p>
+                <p th:text="'Wheel Arrangement: ' + ${train.wheelArrangement}">
+                Wheel Arrangement: …
+                </p>
+                <p th:text="'Location: ' + ${train.location}">Location: …</p>
+                <p th:text="'Engine Type: ' + ${train.engineType}">
+                Engine Type: …
+                </p>
+                <p th:text="'Spotted By: ' + ${train.user.userName}">
+                Spotted By: …
+                </p>
+                <p th:text="'Date Spotted: ' + ${train.dateSpotted}">
+                Date Spotted: …
+                </p>
+            </div>
+            <div class="col">
+                <img th:src="@{/files/{img}(img=${train.imagePath})}" th:alt="${train.getName()}" class="img-fluid" />
+            </div>
+        </div>
+
+        <div th:if="${loggedInUser.id == train.user.id}" class="mt-3">
+            <form th:action="@{/trains/edit/{id}(id=${train.id})}" method="get">
+                <button type="submit" class="btn btn-warning">Edit Train</button>
+            </form>
+            <form th:action="@{/trains/delete/{id}(id=${train.id})}" method="get">
+                <button type="submit" class="btn btn-danger">Delete Train</button>
+            </form>
+        </div>
+
+
+    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

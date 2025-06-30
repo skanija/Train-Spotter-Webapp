@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Spotter</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body class="p-3">
+
+        <h1 class="text-primary">Welcome!</h1>
+
+        <p>Register</p>
+        <form action="#" th:action="@{/register}" th:object="${newUser}" method="post">
+            <p>
+                <label>Username: 
+                    <input th:field="*{userName}"/>
+                </label>
+            </p>
+            <p>
+                <label>Email: 
+                    <input type="email" th:field="*{email}"/>
+                </label>
+            </p>
+            <p>
+                <label>Password: 
+                    <input type="password" th:field="*{password}"/>
+                </label>
+            </p>
+            <p>
+                <label>Confirm Password: 
+                    <input type="password" th:field="*{confirm}"/>
+                </label>
+            </p>
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+
+        <p>Log In</p>
+        <form action="#" th:action="@{/login}" th:object="${newLogin}" method="post">
+            <p>
+                <label>Email: 
+                    <input th:field="*{email}"/>
+                </label>
+            </p>
+            <p>
+                <label>Password: 
+                    <input type="password" th:field="*{password}"/>
+                </label>
+            </p>
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Spotter</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-primary">User Settings</h1>
+            </div>
+            <div class="col">
+                <p><a href="/trains">trains</a></p>
+            </div>
+            <div class="col">
+                <p><a href="/logout">logout</a></p>
+            </div>
+        </div>
+
+        <div>
+            <p>User Info</p>
+            <p>
+                Username:
+                <span th:text="${loggedInUser.userName}">CurrentUsername</span>
+            </p>
+            <p>
+                Email:
+                <span th:text="${loggedInUser.email}">user@example.com</span>
+            </p>
+            <p>Password: ******</p>
+        </div>
+
+        <p>Edit User</p>
+        <form th:action="@{/users/edit}" th:object="${editUser}" method="post">
+
+            <input type="hidden" th:field="*{id}" th:value="${loggedInUser.id}" />
+
+            <div class="form-group mb-3">
+                <label for="userName">Username:</label>
+                <input
+                    type="text"
+                    id="userName"
+                    th:field="*{userName}"
+                    class="form-control"
+                />
+                <div
+                    th:if="${#fields.hasErrors('userName')}"
+                    th:errors="*{userName}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    th:field="*{email}"
+                    class="form-control"
+                />
+                <div
+                    th:if="${#fields.hasErrors('email')}"
+                    th:errors="*{email}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="password">New Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    th:field="*{password}"
+                    class="form-control"
+                />
+                <div
+                    th:if="${#fields.hasErrors('password')}"
+                    th:errors="*{password}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="confirm">Confirm New Password:</label>
+                <input
+                    type="password"
+                    id="confirm"
+                    th:field="*{confirm}"
+                    class="form-control"
+                />
+                <div
+                    th:if="${#fields.hasErrors('confirm')}"
+                    th:errors="*{confirm}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Spotter</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body class="p-3">
+
+        <div class="row">
+            <div class="col">
+                <h1 class="text-primary">New Train</h1>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/trains}">trains</a></p>
+            </div>
+            <div class="col">
+                <p><a th:href="@{/logout}">logout</a></p>
+            </div>
+        </div>
+
+        <form th:action="@{/trains/add}" th:object="${train}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input
+                    type="text"
+                    th:field="*{name}"
+                    id="name"
+                    class="form-control"
+                />
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Name must be reporting mark then road number. eg. SP 794"
+                >
+                    ?
+                </button>
+                <div
+                    th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="buildDate">Build Date:</label>
+                <input
+                    type="date"
+                    th:field="*{buildDate}"
+                    id="buildDate"
+                    class="form-control d-inline-block w-auto"
+                />
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="If day or month is unknown, use the first of month/year"
+                >
+                    ?
+                </button>
+                <div
+                    th:if="${#fields.hasErrors('buildDate')}"
+                    th:errors="*{buildDate}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="wheelArrangement">Wheel Arrangement:</label>
+                <input
+                    type="text"
+                    th:field="*{wheelArrangement}"
+                    id="wheelArrangement"
+                    class="form-control"
+                />
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Steam engines will be in Whyte notation(eg. 2-8-2), and deisels and electric engines will be in UIC or AAR notation (eg. (Co)(Co)/C-C)"
+                >
+                    ?
+                </button>
+                <div
+                    th:if="${#fields.hasErrors('wheelArrangement')}"
+                    th:errors="*{wheelArrangement}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input
+                    type="text"
+                    th:field="*{location}"
+                    id="location"
+                    class="form-control"
+                />
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Location will be formatted as nearest town, two-letter abbreviation of state or country (eg. San Antonio, TX / Berlin, DE)"
+                >
+                    ?
+                </button>
+                <div
+                    th:if="${#fields.hasErrors('location')}"
+                    th:errors="*{location}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="engineType">Engine Type:</label>
+                <select
+                    th:field="*{engineType}"
+                    id="engineType"
+                    class="form-control w-auto"
+                >
+                    <option th:value="'Steam'">Steam</option>
+                    <option th:value="'Diesel'">Diesel</option>
+                    <option th:value="'Electric'">Electric</option>
+                </select>
+                <div
+                    th:if="${#fields.hasErrors('engineType')}"
+                    th:errors="*{engineType}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateSpotted">Date Spotted:</label>
+                <input
+                    type="date"
+                    th:field="*{dateSpotted}"
+                    id="dateSpotted"
+                    class="form-control w-auto"
+                />
+                <div
+                    th:if="${#fields.hasErrors('dateSpotted')}"
+                    th:errors="*{dateSpotted}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image Upload:</label>
+                <input
+                    type="file"
+                    th:field="*{image}"
+                    id="image"
+                    class="form-control-file"
+                />
+                <div
+                    th:if="${#fields.hasErrors('image')}"
+                    th:errors="*{image}"
+                    class="text-danger"
+                ></div>
+            </div>
+
+            <input
+                type="hidden"
+                th:field="*{user.id}"
+                th:value="${loggedInUser.id}"
+            />
+
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    </body>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>
